@@ -5,4 +5,5 @@ app_name = 'tabelog'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('search', views.Search, name='search'),
 ]

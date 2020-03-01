@@ -8,8 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 
   <title>食べナビ</title>
 </head>
@@ -36,8 +37,8 @@
     </div>
   </nav>
 
-  <section>
-    <div id="top_carousel" class="carousel slide carousel-fade" data-ride="carousel">
+  <section class="search">
+    <div id="top_carousel" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="{% static 'image/top1.jpg' %}" class="d-block w-100" height="500px" alt="今日はどこで食べようか？">
@@ -69,17 +70,65 @@
     </div>
   </section>
 
+  <section class="search-sec">
+    <div class="container">
+      <form method="GET" action="{% url 'tabelog:search' %}" name="searchform">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                <select class="form-control search-slt" name="pref">
+                  <option value="">都道府県</option>
+                  {% for item in pref_list %}
+                  <option value="{{item.pref}}">{{ item.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                <select class="form-control search-slt" name="category_l">
+                  <option value="">カテゴリ</option>
+                  {% for item in category_list %}
+                  <option value="{{item.category_l}}">{{ item.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                <input class="form-control search-slt" type="text" placeholder="フリーワード" aria-label="Search"
+                  name="freeword">
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                <button type="submit" class="btn search-btn">検索</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <br><br>
+  <!-- フッター -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <br /><br />
+        <hr />
+        <p>tabenavi</p>
+        <a href="https://api.gnavi.co.jp/api/scope/" target="_blank">
+          <img src="https://api.gnavi.co.jp/api/img/credit/api_265_65.gif" width="265" height="65" border="0"
+            alt="グルメ情報検索サイト　ぐるなび">
+        </a>
+        <br /><br />
+      </div>
+    </div>
+  </div>
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/index.js' %}"></script>
 </body>
 
 </html>
