@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    {% if restaurants_info %}
+    <h3>{{ total_hit_count }}件あります。<small>最大10件表示</small></h3>
+    <br><br>
+    {% for item in restaurants_info %}
+    <div class="col-md-12">
+      <div class="section-outer-box">
+        <div class="row">
+          <div class="col-xs-3 col-md-3">
+            <img src="{{ item.5 }}" alt="{{ item.1 }}" class="img-rounded img-responsive" width="150px" />
+          </div>
+          <div class="col-xs-9 col-md-9 section-box">
+            <h4>{{ item.1 }}　<a href="" class="btn common-btn">詳細を見る</a></h4>
+            <p>{{ item.2 }}</p>
+            <p>{{ item.7 }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="row">
+      <div class="col-lg-12">
+        <p>該当するものはありません。</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

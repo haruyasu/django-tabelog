@@ -1,0 +1,47 @@
+.navbar {
+  border-top: solid 2px #ffaa00;
+}
+
+.common-btn{
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    /* height: calc(3rem + 2px) !important; */
+    border-radius:20px !important;
+    background: #ffaa00;
+    color: #ffffff;
+}
+
+.common-btn-outline{
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    /* height: calc(3rem + 2px) !important; */
+    border-radius:20px !important;
+    border: solid 1px #ffaa00 !important;
+    background: #ffffff;
+    color: #ffaa00;
+}
+
+.section-title {
+  font-size: 30px;
+  color: #333;
+  line-height: 52px;
+  font-weight: 700;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.section-title:before {
+  position: absolute;
+  content: '';
+  height: 1px;
+  width: 45px;
+  left: 50%;
+  bottom: 10px;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: #ffaa00;
+}
