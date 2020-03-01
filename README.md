@@ -1,1 +1,2 @@
-# django-tabelog
+# Django Tabelog APP
+
