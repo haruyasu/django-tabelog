@@ -19,7 +19,7 @@
             <img src="{{ item.5 }}" alt="{{ item.1 }}" class="img-rounded img-responsive" width="150px" />
           </div>
           <div class="col-xs-9 col-md-9 section-box">
-            <h4>{{ item.1 }}　<a href="" class="btn common-btn">詳細を見る</a></h4>
+            <h4>{{ item.1 }}　<a href="{% url 'techapp:shop_info' item.0 %}" class="btn common-btn">詳細を見る</a></h4>
             <p>{{ item.2 }}</p>
             <p>{{ item.7 }}</p>
           </div>
