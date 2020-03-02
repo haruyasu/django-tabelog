@@ -93,6 +93,7 @@ def extract_restaurant_info(restaurants: 'restaurant response') -> 'restaurant l
                                 shop_image2, address, tel, station_line, station, latitude, longitude, pr_long])
     return restaurant_list
 
+
 def ShopInfo(request, restid):
     keyid = get_keyid()
     id = restid
@@ -103,6 +104,6 @@ def ShopInfo(request, restid):
     params = {
         'title': '店舗詳細',
         'restaurants_info': restaurants_info,
-        }
+    }
 
-    return render (request, 'techapp/shop_info.html', params)
+    return render(request, 'techapp/shop_info.html', params)
