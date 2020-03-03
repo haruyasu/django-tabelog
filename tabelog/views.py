@@ -106,4 +106,4 @@ def ShopInfo(request, restid):
         'restaurants_info': restaurants_info,
     }
 
-    return render(request, 'techapp/shop_info.html', params)
+    return render(request, 'tabelog/shop_info.html', params)
