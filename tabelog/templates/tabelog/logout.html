@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+{% endblock css %}
+
+{% block script %}
+{% endblock script %}
+
+{% block content %}
+<div class="container">
+  <div class="loginPage_contents">
+    <h1 class="h3 loginPage_contents_title">またのご利用をお待ちしております。</h1>
+    <br><br><br>
+    <a href="{% url 'tabelog:login' %}">ログインページへ</a>
+  </div>
+
+</div>
+{% endblock %}
