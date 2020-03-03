@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category, Pref, User
+from .models import Category, Pref, User, Review
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
@@ -41,3 +41,9 @@ class LoginForm(AuthenticationForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['placeholder'] = field.label
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['score', 'comment']

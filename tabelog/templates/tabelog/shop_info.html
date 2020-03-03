@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/review.css' %}">
+{% endblock css %}
+
 {% block content %}
 <div class="container">
   <div class="row">
@@ -33,7 +37,15 @@
         </a>
       </div>
       <br>
-
+      {% if not average_rate == 0 %}
+      <p>ユーザーによる評価</p>
+      <div class="star-rating">
+        <div class="star-rating-front" style="width: {{ average_rate }}%">★★★★★</div>
+        <div class="star-rating-back">★★★★★</div>
+      </div>({{ average|floatformat }}点 / {{ review_count }}件)
+      {% else %}
+      <p>　(まだ評価はありません。最初のレビューをお願いします！)</p>
+      {% endif %}
     </div>
 
     <div class="col-md-8">
@@ -84,6 +96,78 @@
       </table>
     </div>
   </div>
-</div>
 
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="section-title">口コミ情報</h2>
+      {% if review_list %}
+      <h3>レビューコメント</h3>
+      {% for item in review_list %}
+      <div class="balloon5">
+        <div class="faceicon">
+          <img src="{% static 'image/reviewer.png' %}">
+          <p class="small">{{ item.user }}</p>
+        </div>
+        <div class="chatting">
+          <div class="says">
+            <div class="star-rating">
+              <div class="star-rating-front" style="width: {{ item.get_percent }}%">★★★★★</div>
+              <div class="star-rating-back">★★★★★</div>
+            </div>
+            <br>
+            <p>{{ item.comment }}</p>
+            <p class="small">{{ item.created_at }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <br>
+      <p>まだレビューはありません。</p>
+      <br>
+      {% endif %}
+      <hr>
+      <h3>レビューを投稿する</h3>
+      {% if user.is_authenticated %}
+      <form class="login-form" action="" method="POST">
+        {{ review_form.non_field_errors }}
+        <div class="evaluation" style="float:left;">
+          <input id="score1" type="radio" name="score" value="5" />
+          <label for="score1"><span class="text">最高</span>★</label>
+          <input id="score2" type="radio" name="score" value="4" />
+          <label for="score2"><span class="text">良い</span>★</label>
+          <input id="score3" type="radio" name="score" value="3" />
+          <label for="score3"><span class="text">普通</span>★</label>
+          <input id="score4" type="radio" name="score" value="2" />
+          <label for="score4"><span class="text">悪い</span>★</label>
+          <input id="score5" type="radio" name="score" value="1" />
+          <label for="score5"><span class="text">最悪</span>★</label>
+        </div>
+        <br><br><br>
+        <label for="comment">コメント:</label>
+        <div class="form-group" type="text">{{ review_form.comment }}</div>
+
+        {% csrf_token %}
+        <br>
+        <button type="submit" class="btn common-btn">投稿する</button>
+        {% if form.errors %}
+        <br>
+        <p>エラー内容</p>
+        {% for field in form %}
+        {% for error in field.errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+      </form>
+      {% else %}
+      <p>レビューコメントを残すにはログインが必要です。</p>
+      <br>
+      <a class="btn common-btn" href="">新規登録</a>
+      <a class="btn common-btn-outline" href="{% url 'tabelog:login' %}">ログイン</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock %}
