@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class Category(models.Model):
   category_l = models.CharField("業態カテゴリ", max_length=10, blank=False)

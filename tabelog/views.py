@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
 
 from .models import Pref, Category
-from .forms import SearchForm
+from .forms import SearchForm, SignUpForm
+from django.contrib.auth import login, authenticate
 import json
 import requests
 
@@ -107,3 +108,18 @@ def ShopInfo(request, restid):
     }
 
     return render(request, 'tabelog/shop_info.html', params)
+
+class SignUp(CreateView):
+    form_class = SignUpForm
+    template_name = 'tabelog/signup.html'
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('tabelog:index')
+        return render(request, 'tabelog/signup.html', {'form': form})
