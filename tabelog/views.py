@@ -6,6 +6,7 @@ from .forms import SearchForm, SignUpForm, LoginForm, ReviewForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Avg
+from django.contrib import messages
 import json
 import requests
 
@@ -123,15 +124,22 @@ def ShopInfo(request, restid):
             review = Review()
             review.shop_id = restid
             review.shop_name = restaurants_info[0][1]
-            review.shop_kana = restaurants_info[0][2]
-            review.shop_address = restaurants_info[0][7]
             review.image_url = restaurants_info[0][5]
             review.user = request.user
             review.score = score
             review.comment = comment
-            review.save()
-            return redirect('tabelog:shop_info', restid)
+            is_exist = 0
+            is_exist = Review.objects.filter(shop_id = review.shop_id).filter(user = review.user).count()
+            
+            if not is_exist == 0:
+                messages.error(request, '既にレビューを投稿済みです。')
+                return redirect('tabelog:shop_info', restid)
+            else:
+                review.save()
+                messages.success(request, 'レビューを投稿しました。')
+                return redirect('tabelog:shop_info', restid)
         else:
+            messages.error(request, 'エラーがあります。')
             return redirect('tabelog:shop_info', restid)
         return render(request, 'tabelog/index.html', {})
 
