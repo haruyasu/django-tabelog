@@ -122,3 +122,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'tabelog/static')]
+
+LOGIN_URL = 'tabelog:login'
+LOGIN_REDIRECT_URL = 'tabelog:index'

@@ -8,4 +8,5 @@ urlpatterns = [
     path('search', views.Search, name='search'),
     path('shop_info/<str:restid>', views.ShopInfo, name='shop_info'),
     path('signup/', views.SignUp.as_view(), name='signup'),
+    path('login/', views.Login.as_view(), name='login'),
 ]

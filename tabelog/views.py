@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
 
 from .models import Pref, Category
-from .forms import SearchForm, SignUpForm
+from .forms import SearchForm, SignUpForm, LoginForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.views import LoginView
 import json
 import requests
 
@@ -123,3 +124,9 @@ class SignUp(CreateView):
             login(request, user)
             return redirect('tabelog:index')
         return render(request, 'tabelog/signup.html', {'form': form})
+
+
+class Login(LoginView):
+    form_class = LoginForm
+    template_name = 'tabelog/login.html'
+

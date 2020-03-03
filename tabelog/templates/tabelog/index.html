@@ -24,7 +24,7 @@
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-item nav-link" href="">ログイン</a>
+          <a class="nav-item nav-link" href="{% url 'tabelog:login' %}">ログイン</a>
         </li>
         <li>
           <a class="nav-item nav-link" href="{% url 'tabelog:signup' %}">新規ユーザ登録</a>
