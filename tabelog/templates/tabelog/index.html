@@ -103,6 +103,30 @@
     </div>
   </section>
 
+  <div class="container">
+    <h2 class="section-title">おすすめ</h2>
+  </div>
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        {% for item in pickup_list %}
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="{{ item.5 }}" alt="{{ item.1 }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.1 }}</h5>
+              <p class="card-text">{{ item.7 }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'tabelog:shop_info' item.0 %}" class="btn common-btn">詳細を見る</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
   <br><br>
   <div class="container">
     <div class="row">
