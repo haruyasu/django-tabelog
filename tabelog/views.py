@@ -21,13 +21,15 @@ class IndexView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         searchform = SearchForm()
         
-        query = get_gnavi_data("", "RSFST09000", "", "女子会", 12)
+        query = get_gnavi_data("", "RSFST09000", "", "花見", 12)
         res_list = rest_search(query)
         pickup_list = extract_restaurant_info(res_list)
+        review_list = Review.objects.all()[:10]
 
         params = {
             'searchform': searchform,
             'pickup_list': pickup_list,
+            'review_list': review_list
             }
         return params
 
