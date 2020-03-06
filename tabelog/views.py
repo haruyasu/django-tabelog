@@ -16,8 +16,8 @@ def get_keyid():
 
 
 class IndexView(TemplateView):
-    template_name = 'tabelog/index.html'
-    # template_name = 'tabelog/test.html'
+    # template_name = 'tabelog/index.html'
+    template_name = 'tabelog/test.html'
 
     def get_context_data(self, *args, **kwargs):
         searchform = SearchForm()
@@ -73,7 +73,8 @@ def get_gnavi_data(id, category_l, pref, freeword, hit_per_page):
 
 def rest_search(query):
     res_list = []
-    res = json.loads(requests.get("https://api.gnavi.co.jp/RestSearchAPI/v3/", params=query).text)
+    res = json.loads(requests.get(
+        "https://api.gnavi.co.jp/RestSearchAPI/v3/", params=query).text)
     if "error" not in res:
         res_list.extend(res["rest"])
     return res_list
@@ -85,29 +86,17 @@ def extract_restaurant_info(restaurants: 'restaurant response') -> 'restaurant l
         id = restaurant["id"]
         name = restaurant["name"]
         name_kana = restaurant["name_kana"]
-        latitude = restaurant["latitude"]
-        longitude = restaurant["longitude"]
         url = restaurant["url"]
         url_mobile = restaurant["url_mobile"]
         shop_image1 = restaurant["image_url"]["shop_image1"]
         shop_image2 = restaurant["image_url"]["shop_image2"]
-        qrcode = restaurant["image_url"]["qrcode"]
         address = restaurant["address"]
         tel = restaurant["tel"]
-        opentime = restaurant["opentime"]
-        holiday = restaurant["holiday"]
         station_line = restaurant["access"]["line"]
         station = restaurant["access"]["station"]
-        station_exit = restaurant["access"]["station_exit"]
-        walk = restaurant["access"]["walk"]
-        parking_lots = restaurant["parking_lots"]
-        pr_short = restaurant["pr"]["pr_short"]
+        latitude = restaurant["latitude"]
+        longitude = restaurant["longitude"]
         pr_long = restaurant["pr"]["pr_long"]
-        budget = restaurant["budget"]
-        party = restaurant["party"]
-        lunch = restaurant["lunch"]
-        credit_card = restaurant["credit_card"]
-        e_money = restaurant["credit_card"]
 
         restaurant_list.append([id, name, name_kana, url, url_mobile, shop_image1,
                                 shop_image2, address, tel, station_line, station, latitude, longitude, pr_long])
