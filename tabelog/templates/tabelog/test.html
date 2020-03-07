@@ -1,11 +1,397 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
+{% load static %}
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Research</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/test.css' %}">
+
 </head>
+
 <body>
-  <h1>test</h1>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Research</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="py-5 mb-5 bg-image-full">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Django Startup</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <div class="container">
+    <h2 class="mb-4">条件からお店を探す</h2>
+
+    <div class="p-4 mb-4 bg-warning rounded">
+      <form action="">
+        <h4 class="mb-4">基本条件</h4>
+
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="">エリア</label>
+              <select class="form-control" id="">
+                <option>こだわらない</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="">ジャンル</label>
+              <select class="form-control" id="">
+                <option>こだわらない</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="">フリーワード</label>
+              <input type="text" class="form-control" id="" placeholder="こだわらない">
+            </div>
+          </div>
+        </div>
+
+        <h4 class="mb-4">こだわり条件</h4>
+
+        <div class="row mb-4">
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="">
+              <label class="form-check-label" for="">ランチ営業</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <button class="btn btn-success" type="submit">この条件で絞り込む</button>
+        </div>
+      </form>
+    </div>
+
+    <h2 class="mb-4">おすすめのお店</h2>
+
+    <div class="row">
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
+              neque sequi doloribus.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-success">詳細を確認</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
+              neque sequi doloribus totam ut praesentium aut.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-success">詳細を確認</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
+              neque.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-success">詳細を確認</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
+              neque.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-success">詳細を確認</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
+              neque.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-success">詳細を確認</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
+              neque.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-success">詳細を確認</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <!-- <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+
 </body>
+
 </html>
