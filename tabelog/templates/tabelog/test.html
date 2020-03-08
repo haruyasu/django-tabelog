@@ -47,7 +47,6 @@
     </div>
   </nav>
 
-  <!-- Header -->
   <header class="py-5 mb-5 bg-image-full">
     <div class="overlay"></div>
     <div class="container">
@@ -61,43 +60,36 @@
     </div>
   </header>
 
-  <!-- Page Content -->
   <div class="container">
     <h2 class="mb-4">条件からお店を探す</h2>
 
     <div class="p-4 mb-4 bg-warning rounded">
-      <form action="">
+        <form method="GET" action="{% url 'tabelog:search' %}" name="searchform">
         <h4 class="mb-4">基本条件</h4>
 
         <div class="row mb-4">
           <div class="col-md-4">
-            <div class="form-group">
-              <label for="">エリア</label>
-              <select class="form-control" id="">
-                <option>こだわらない</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
+            <label>エリア</label>
+            <select class="form-control" name="pref">
+              <option value="">こだわらない</option>
+              {% for item in pref_list %}
+              <option value="{{item.pref}}">{{ item.name }}</option>
+              {% endfor %}
+            </select>
           </div>
           <div class="col-md-4">
-            <div class="form-group">
-              <label for="">ジャンル</label>
-              <select class="form-control" id="">
-                <option>こだわらない</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
+            <label>ジャンル</label>
+            <select class="form-control" name="category_l">
+              <option value="">こだわらない</option>
+              {% for item in category_list %}
+              <option value="{{item.category_l}}">{{ item.name }}</option>
+              {% endfor %}
+            </select>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="">フリーワード</label>
-              <input type="text" class="form-control" id="" placeholder="こだわらない">
+              <input class="form-control" type="text" placeholder="こだわらない" aria-label="Search" name="freeword">
             </div>
           </div>
         </div>
@@ -296,96 +288,28 @@
     <h2 class="mb-4">おすすめのお店</h2>
 
     <div class="row">
+      {% for item in pickup_list %}
       <div class="col-md-4 mb-5">
         <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+          <img class="card-img-top" src="{{ item.5 }}" alt="">
           <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
-              neque sequi doloribus.</p>
+            <h4 class="card-title">{{ item.1 }}</h4>
+            <p class="card-text">{{ item.7 }}</p>
           </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-success">詳細を確認</a>
+          <div class="text-center mb-3">
+            <a href="{% url 'tabelog:shop_info' item.0 %}" class="btn btn-success">詳細</a>
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
-              neque sequi doloribus totam ut praesentium aut.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-success">詳細を確認</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
-              neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-success">詳細を確認</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
-              neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-success">詳細を確認</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
-              neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-success">詳細を確認</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus
-              neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-success">詳細を確認</a>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
-    <!-- /.row -->
 
   </div>
-  <!-- /.container -->
 
-  <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
     </div>
-    <!-- /.container -->
   </footer>
 
   <!-- Bootstrap core JavaScript -->
