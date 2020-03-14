@@ -40,3 +40,7 @@
   height: 200px;
   object-fit: cover;
 }
+
+label, input[type='checkbox'] {
+  cursor: pointer;
+}

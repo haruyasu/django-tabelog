@@ -21,8 +21,18 @@ class IndexView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         searchform = SearchForm()
+        category_l = "RSFST09000" # 居酒屋
+        pref = "PREF13" # 東京都
+        freeword = "歓送迎会"
+        num = 9
         
-        query = get_gnavi_data("", "RSFST09000", "", "花見", 12)
+        query = get_gnavi_data(
+            "",
+            category_l,
+            pref,
+            freeword,
+            num
+        )
         res_list = rest_search(query)
         pickup_list = extract_restaurant_info(res_list)
         review_list = Review.objects.all()[:10]
@@ -43,7 +53,84 @@ def Search(request):
             category_l = request.GET['category_l']
             pref = request.GET['pref']
             freeword = request.GET['freeword']
-            query = get_gnavi_data("", category_l, pref, freeword, 10)
+            num = 10
+            lunch = request.GET['lunch']
+            no_smoking = request.GET['no_smoking']
+            card = request.GET['card']
+            mobilephone = request.GET['mobilephone']
+            bottomless_cup = request.GET['bottomless_cup']
+            sunday_open = request.GET['sunday_open']
+            takeout = request.GET['takeout']
+            private_room = request.GET['private_room']
+            midnight = request.GET['midnight']
+            parking = request.GET['parking']
+            memorial_service = request.GET['memorial_service']
+            birthday_privilege = request.GET['birthday_privilege']
+            betrothal_present = request.GET['betrothal_present']
+            kids_menu = request.GET['kids_menu']
+            outret = request.GET['outret']
+            wifi = request.GET['wifi']
+            microphone = request.GET['microphone']
+            buffet = request.GET['buffet']
+            late_lunch = request.GET['late_lunch']
+            sports = request.GET['sports']
+            until_morning = request.GET['until_morning']
+            lunch_desert = request.GET['lunch_desert']
+            projecter_screen = request.GET['projecter_screen']
+            with_pet = request.GET['with_pet']
+            deliverly = request.GET['deliverly']
+            special_holiday_lunch = request.GET['special_holiday_lunch']
+            e_money = request.GET['e_money']
+            caterling = request.GET['caterling']
+            breakfast = request.GET['breakfast']
+            desert_buffet = request.GET['desert_buffet']
+            lunch_buffet = request.GET['lunch_buffet']
+            bento = request.GET['bento']
+            lunch_salad_buffet = request.GET['lunch_salad_buffet']
+            darts = request.GET['darts']
+            web_reserve = request.GET['web_reserve']
+            query = get_gnavi_data(
+                "",
+                category_l,
+                pref,
+                freeword,
+                num,
+                lunch,
+                no_smoking,
+                card,
+                mobilephone,
+                bottomless_cup,
+                sunday_open,
+                takeout,
+                private_room,
+                midnight,
+                parking,
+                memorial_service,
+                birthday_privilege,
+                betrothal_present,
+                kids_menu,
+                outret,
+                wifi,
+                microphone,
+                buffet,
+                late_lunch,
+                sports,
+                until_morning,
+                lunch_desert,
+                projecter_screen,
+                with_pet,
+                deliverly,
+                special_holiday_lunch,
+                e_money,
+                caterling,
+                breakfast,
+                desert_buffet,
+                lunch_buffet,
+                bento,
+                lunch_salad_buffet,
+                darts,
+                web_reserve
+            )
             res_list = rest_search(query)
             total_hit_count = len(res_list)
             restaurants_info = extract_restaurant_info(res_list)
@@ -56,17 +143,92 @@ def Search(request):
     return render(request, 'tabelog/search.html', params)
 
 
-def get_gnavi_data(id, category_l, pref, freeword, hit_per_page):
-    keyid = get_keyid()
-    hit_per_page = hit_per_page
-    id = id
-    category_l = category_l
-    pref = pref
-    freeword = freeword
-    # 今回は関東地方のみ（コール回数を少なくするため）
-    area = "AREA110"
-    query = {"keyid": keyid, "id": id, "area": area, "pref": pref,
-             "category_l": category_l, "hit_per_page": hit_per_page, "freeword": freeword}
+def get_gnavi_data(
+        id,
+        category_l,
+        pref,
+        freeword,
+        hit_per_page,
+        lunch=0,
+        no_smoking=0,
+        card=0,
+        mobilephone=0,
+        bottomless_cup=0,
+        sunday_open=0,
+        takeout=0,
+        private_room=0,
+        midnight=0,
+        parking=0,
+        memorial_service=0,
+        birthday_privilege=0,
+        betrothal_present=0,
+        kids_menu=0,
+        outret=0,
+        wifi=0,
+        microphone=0,
+        buffet=0,
+        late_lunch=0,
+        sports=0,
+        until_morning=0,
+        lunch_desert=0,
+        projecter_screen=0,
+        with_pet=0,
+        deliverly=0,
+        special_holiday_lunch=0,
+        e_money=0,
+        caterling=0,
+        breakfast=0,
+        desert_buffet=0,
+        lunch_buffet=0,
+        bento=0,
+        lunch_salad_buffet=0,
+        darts=0,
+        web_reserve=0
+    ):
+    query = {
+        "keyid": get_keyid(),
+        "id": id,
+        "area": "AREA110",
+        "pref": pref,
+        "category_l": category_l,
+        "freeword": freeword,
+        "hit_per_page": hit_per_page,
+        "lunch": lunch,
+        "no_smoking": no_smoking,
+        "card": card,
+        "mobilephone": mobilephone,
+        "bottomless_cup": bottomless_cup,
+        "sunday_open": sunday_open,
+        "takeout": takeout,
+        "private_room": private_room,
+        "midnight": midnight,
+        "parking": parking,
+        "memorial_service": memorial_service,
+        "birthday_privilege": birthday_privilege,
+        "betrothal_present": betrothal_present,
+        "kids_menu": kids_menu,
+        "outret": outret,
+        "wifi": wifi,
+        "microphone": microphone,
+        "buffet": buffet,
+        "late_lunch": late_lunch,
+        "sports": sports,
+        "until_morning": until_morning,
+        "lunch_desert": lunch_desert,
+        "projecter_screen": projecter_screen,
+        "with_pet": with_pet,
+        "deliverly": deliverly,
+        "special_holiday_lunch": special_holiday_lunch,
+        "e_money": e_money,
+        "caterling": caterling,
+        "breakfast": breakfast,
+        "desert_buffet": desert_buffet,
+        "lunch_buffet": lunch_buffet,
+        "bento": bento,
+        "lunch_salad_buffet": lunch_salad_buffet,
+        "darts": darts,
+        "web_reserve": web_reserve
+    }
 
     return query
 
@@ -80,7 +242,7 @@ def rest_search(query):
     return res_list
 
 
-def extract_restaurant_info(restaurants: 'restaurant response') -> 'restaurant list':
+def extract_restaurant_info(restaurants):
     restaurant_list = []
     for restaurant in restaurants:
         id = restaurant["id"]
@@ -106,7 +268,13 @@ def extract_restaurant_info(restaurants: 'restaurant response') -> 'restaurant l
 def ShopInfo(request, restid):
     keyid = get_keyid()
     id = restid
-    query = get_gnavi_data(id, "", "", "", 1)
+    query = get_gnavi_data(
+        id,
+        "",
+        "",
+        "",
+        1
+    )
     res_list = rest_search(query)
     restaurants_info = extract_restaurant_info(res_list)
     review_count = Review.objects.filter(shop_id=restid).count()
