@@ -16,8 +16,7 @@ def get_keyid():
 
 
 class IndexView(TemplateView):
-    # template_name = 'tabelog/index.html'
-    template_name = 'tabelog/test.html'
+    template_name = 'tabelog/index.html'
 
     def get_context_data(self, *args, **kwargs):
         searchform = SearchForm()
