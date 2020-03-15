@@ -275,8 +275,8 @@ def extract_restaurant_info(restaurants):
         areaname = restaurant["code"]["areaname"]
         prefname = restaurant["code"]["prefname"]
         areaname_s = restaurant["code"]["areaname_s"]
-        category_name_l = restaurant["code"]["category_name_l"]
-        category_name_s = restaurant["code"]["category_name_s"]
+        category_name_l = " | ".join(filter(lambda a: a != '', restaurant["code"]["category_name_l"]))
+        category_name_s = " | ".join(filter(lambda a: a != '', restaurant["code"]["category_name_s"]))
         budget = restaurant["budget"]
         party = restaurant["party"]
         lunch = restaurant["lunch"]
