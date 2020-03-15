@@ -16,7 +16,7 @@ def get_keyid():
 
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = 'tabelog/index.html'
 
     def get_context_data(self, *args, **kwargs):
         searchform = SearchForm()
@@ -139,7 +139,7 @@ def Search(request):
         'restaurants_info': restaurants_info,
     }
 
-    return render(request, 'search.html', params)
+    return render(request, 'tabelog/search.html', params)
 
 
 def get_gnavi_data(
@@ -375,7 +375,7 @@ def ShopInfo(request, restid):
         else:
             messages.error(request, 'エラーがあります。')
             return redirect('shop_info', restid)
-        return render(request, 'index.html', {})
+        return render(request, 'tabelog/index.html', {})
 
     params = {
         'title': '店舗詳細',
@@ -387,7 +387,7 @@ def ShopInfo(request, restid):
         'average_rate': average_rate,
     }
 
-    return render(request, 'shop_info.html', params)
+    return render(request, 'tabelog/shop_info.html', params)
 
 
 # class SignUp(CreateView):
