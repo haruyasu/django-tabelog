@@ -65,3 +65,64 @@ input[type='checkbox'] {
 .my-icon2 {
     color: coral !important;
 }
+
+.img-carousel {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.evaluation {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.evaluation input[type="radio"] {
+    display: none;
+}
+
+.evaluation label {
+    position: relative;
+    padding: 10px 10px 0;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.evaluation label .text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+}
+
+.evaluation label:hover,
+.evaluation label:hover~label,
+.evaluation input[type="radio"]:checked~label {
+    color: coral;
+}
+
+textarea {
+    width: 80%;
+    border-radius: 3px;
+}
+
+.star-rating {
+    position: relative;
+}
+
+.star-rating-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    color: coral;
+}
+
+.star-rating-back {
+    color: #ccc;
+}
