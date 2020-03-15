@@ -245,22 +245,84 @@ def extract_restaurant_info(restaurants):
     restaurant_list = []
     for restaurant in restaurants:
         id = restaurant["id"]
+        update_date = restaurant["update_date"]
         name = restaurant["name"]
         name_kana = restaurant["name_kana"]
-        url = restaurant["url"]
-        url_mobile = restaurant["url_mobile"]
-        shop_image1 = restaurant["image_url"]["shop_image1"]
-        shop_image2 = restaurant["image_url"]["shop_image2"]
-        address = restaurant["address"]
-        tel = restaurant["tel"]
-        station_line = restaurant["access"]["line"]
-        station = restaurant["access"]["station"]
         latitude = restaurant["latitude"]
         longitude = restaurant["longitude"]
+        category = restaurant["category"]
+        url = restaurant["url"]
+        url_mobile = restaurant["url_mobile"]
+        coupon_url_pc = restaurant["coupon_url"]["pc"]
+        coupon_url_mobile = restaurant["coupon_url"]["mobile"]
+        shop_image1 = restaurant["image_url"]["shop_image1"]
+        shop_image2 = restaurant["image_url"]["shop_image2"]
+        qrcode = restaurant["image_url"]["qrcode"]
+        address = restaurant["address"]
+        tel = restaurant["tel"]
+        tel_sub = restaurant["tel_sub"]
+        fax = restaurant["fax"]
+        opentime = restaurant["opentime"]
+        holiday = restaurant["holiday"]
+        line = restaurant["access"]["line"]
+        station = restaurant["access"]["station"]
+        station_exit = restaurant["access"]["station_exit"]
+        walk = restaurant["access"]["walk"]
+        note = restaurant["access"]["note"]
+        parking_lots = restaurant["parking_lots"]
+        pr_short = restaurant["pr"]["pr_short"]
         pr_long = restaurant["pr"]["pr_long"]
+        areaname = restaurant["code"]["areaname"]
+        prefname = restaurant["code"]["prefname"]
+        areaname_s = restaurant["code"]["areaname_s"]
+        category_name_l = restaurant["code"]["category_name_l"]
+        category_name_s = restaurant["code"]["category_name_s"]
+        budget = restaurant["budget"]
+        party = restaurant["party"]
+        lunch = restaurant["lunch"]
+        credit_card = restaurant["credit_card"]
+        e_money = restaurant["e_money"]
 
-        restaurant_list.append([id, name, name_kana, url, url_mobile, shop_image1,
-                                shop_image2, address, tel, station_line, station, latitude, longitude, pr_long])
+        restaurant_list.append([
+            id, # 0
+            update_date, # 1
+            name, # 2
+            name_kana, # 3
+            latitude, # 4
+            longitude, # 5
+            category, # 6
+            url, # 7
+            url_mobile, # 8
+            coupon_url_pc, # 9
+            coupon_url_mobile, # 10
+            shop_image1, # 11
+            shop_image2, # 12
+            qrcode, # 13
+            address, # 14
+            tel, # 15
+            tel_sub, # 16
+            fax, # 17
+            opentime, # 18
+            holiday, # 19
+            line, # 20
+            station, # 21
+            station_exit, # 22
+            walk, # 23
+            note, # 24
+            parking_lots, # 25
+            pr_short, # 26
+            pr_long, # 27
+            areaname, # 28
+            prefname, # 29
+            areaname_s, # 30
+            category_name_l, # 31
+            category_name_s, # 32
+            budget, # 33
+            party, # 34
+            lunch, # 35
+            credit_card, # 36
+            e_money # 37
+        ])
     return restaurant_list
 
 

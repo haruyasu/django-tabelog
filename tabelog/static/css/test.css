@@ -44,3 +44,7 @@ body {
 label, input[type='checkbox'] {
   cursor: pointer;
 }
+
+.img-search {
+  height: 250px;
+}
