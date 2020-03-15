@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <header class="py-5 mb-5 bg-image-full">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="site-heading">
+                        <h1>Sign Up</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <form method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        <table class="table">{{ form.as_table }}</table>
+
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+
+        <div class="text-center">
+            <p>
+                <button type="submit" class="save btn btn-success" role="button">Sign Up</button>
+            </p>
+        </div>
+        </form>
+    </div>
+{% endblock %}

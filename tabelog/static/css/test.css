@@ -126,3 +126,12 @@ textarea {
 .star-rating-back {
     color: #ccc;
 }
+
+.gnavi {
+    color: white;
+}
+
+.gnavi:hover {
+    color: #28A745;
+    text-decoration: none;
+}

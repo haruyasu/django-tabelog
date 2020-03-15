@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tabelog.apps.TabelogConfig'
+    'tabelog.apps.TabelogConfig',
+    'accounts.apps.AccountsConfig',
+    'django.contrib.sites',
+    'allauth', 
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
