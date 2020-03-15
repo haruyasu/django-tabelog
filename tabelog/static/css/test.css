@@ -10,7 +10,7 @@ main {
 }
 
 .bg-image-full {
-    background-image: url('/static/image/top2.jpg');
+    background-image: url('/static/image/top.jpg');
     background-color: #868e96;
     background-attachment: scroll;
     position: relative;

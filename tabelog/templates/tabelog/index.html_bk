@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img src="{% static 'image/top2.jpg' %}" class="d-block w-100" height="500px">
+					<img src="{% static 'image/top.jpg' %}" class="d-block w-100" height="500px">
 					<div class="carousel-caption" style="top:50px">
 						<h1><br>リアルな口コミNo.1！</h1>
 					</div>
