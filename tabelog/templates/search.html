@@ -7,7 +7,7 @@
 			<div class="card my-4">
 				<h5 class="card-header">お店を探す</h5>
 				<div class="card-body">
-					<form method="GET" action="{% url 'tabelog:search' %}" name="searchform">
+					<form method="GET" action="{% url 'search' %}" name="searchform">
 						<div class="row">
 							<div class="col-12 mb-2">
 								<label>エリア</label>
@@ -376,7 +376,7 @@
 							class="fas fa-subway fa-fw my-icon"></i>{{ item.21 }}・徒歩{{ item.23 }}分</p>
 					<p class="card-text mb-2"><i class="fas fa-yen-sign fa-fw my-icon"></i>平均{{ item.33 }}円</p>
 					<p class="card-text mb-auto">{{ item.26 }}</p>
-					<a href="{% url 'tabelog:shop_info' item.0 %}" class="stretched-link"></a>
+					<a href="{% url 'shop_info' item.0 %}" class="stretched-link"></a>
 				</div>
 			</div>
 			{% endfor %}

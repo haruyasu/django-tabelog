@@ -16,7 +16,7 @@ def get_keyid():
 
 
 class IndexView(TemplateView):
-    template_name = 'tabelog/index.html'
+    template_name = 'index.html'
 
     def get_context_data(self, *args, **kwargs):
         searchform = SearchForm()
@@ -139,7 +139,7 @@ def Search(request):
         'restaurants_info': restaurants_info,
     }
 
-    return render(request, 'tabelog/search.html', params)
+    return render(request, 'search.html', params)
 
 
 def get_gnavi_data(
@@ -367,15 +367,15 @@ def ShopInfo(request, restid):
             
             if not is_exist == 0:
                 messages.error(request, '既にレビューを投稿済みです。')
-                return redirect('tabelog:shop_info', restid)
+                return redirect('shop_info', restid)
             else:
                 review.save()
                 messages.success(request, 'レビューを投稿しました。')
-                return redirect('tabelog:shop_info', restid)
+                return redirect('shop_info', restid)
         else:
             messages.error(request, 'エラーがあります。')
-            return redirect('tabelog:shop_info', restid)
-        return render(request, 'tabelog/index.html', {})
+            return redirect('shop_info', restid)
+        return render(request, 'index.html', {})
 
     params = {
         'title': '店舗詳細',
@@ -387,12 +387,12 @@ def ShopInfo(request, restid):
         'average_rate': average_rate,
     }
 
-    return render(request, 'tabelog/shop_info.html', params)
+    return render(request, 'shop_info.html', params)
 
 
 class SignUp(CreateView):
     form_class = SignUpForm
-    template_name = 'tabelog/signup.html'
+    template_name = 'signup.html'
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)
@@ -402,14 +402,14 @@ class SignUp(CreateView):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('tabelog:index')
-        return render(request, 'tabelog/signup.html', {'form': form})
+            return redirect('index')
+        return render(request, 'signup.html', {'form': form})
 
 
 class Login(LoginView):
     form_class = LoginForm
-    template_name = 'tabelog/login.html'
+    template_name = 'login.html'
 
 
 class Logout(LogoutView):
-    template_name = 'tabelog/logout.html'
+    template_name = 'logout.html'

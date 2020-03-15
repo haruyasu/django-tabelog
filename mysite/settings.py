@@ -120,8 +120,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'tabelog/static')]
+LOGIN_REDIRECT_URL = '/'
 
-LOGIN_URL = 'tabelog:login'
-LOGIN_REDIRECT_URL = 'tabelog:index'
+SITE_ID = 1
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+# SignUpした時に確認Emailアドレスを送信しない場合
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+# SignUpした時に確認Emailアドレスを送信する場合
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'gmail adress'
+# EMAIL_HOST_PASSWORD = 'gmail password'
+# EMAIL_USE_TLS = True
+
+IMAGE_ROOT = os.path.join(BASE_DIR, 'images')
+IMAGE_URL = '/images/'
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dss6ah7pd',
+    'API_KEY': '652154181229651',
+    'API_SECRET': 'w0GMP9XLZwRAaj_XgUv_d1F2was'
+}
