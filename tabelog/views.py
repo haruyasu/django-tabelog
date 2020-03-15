@@ -23,7 +23,7 @@ class IndexView(TemplateView):
         category_l = "RSFST09000" # 居酒屋
         pref = "PREF13" # 東京都
         freeword = "歓送迎会"
-        num = 9
+        num = 6
         
         query = get_gnavi_data(
             "",
