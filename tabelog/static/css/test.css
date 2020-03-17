@@ -110,6 +110,7 @@ textarea {
 
 .star-rating {
 	position: relative;
+	font-size: 30px;
 }
 
 .star-rating-front {
@@ -122,6 +123,16 @@ textarea {
 
 .star-rating-back {
 	color: #ccc;
+}
+
+.average {
+	color: red;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.review-count {
+	vertical-align: middle;
 }
 
 .gnavi {
