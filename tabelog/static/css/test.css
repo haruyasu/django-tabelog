@@ -111,6 +111,7 @@ textarea {
 .star-rating {
 	position: relative;
 	font-size: 30px;
+	word-wrap: normal !important;
 }
 
 .star-rating-front {

@@ -111,9 +111,11 @@
                 <div class="card-body">
                     {% if review_list %}
                         {% for item in review_list %}
-                            <div class="star-rating mb-2">
-                                <div class="star-rating-front" style="width: {{ item.get_percent }}%">★★★★★</div>
-                                <div class="star-rating-back">★★★★★</div>
+                            <div class="d-flex flex-row">
+                                <div class="star-rating mb-2">
+                                    <div class="star-rating-front" style="width: {{ item.get_percent }}%">★★★★★</div>
+                                    <div class="star-rating-back">★★★★★</div>
+                                </div>
                             </div>
                             <p>{{ item.comment }}</p>
                             <small class="text-muted">Posted by {{ item.user }} on {{ item.created_at }}</small>
