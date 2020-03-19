@@ -33,8 +33,7 @@ class Review(models.Model):
     image_url = models.CharField('画像１URL', max_length=300, blank=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     comment = models.TextField(verbose_name='レビューコメント', blank=False)
-    score = models.PositiveSmallIntegerField(
-        verbose_name='レビュースコア', choices=SCORE_CHOICES, default='3')
+    score = models.PositiveSmallIntegerField(verbose_name='レビュースコア', choices=SCORE_CHOICES, default='3')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
