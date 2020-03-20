@@ -364,9 +364,8 @@
 			{% if restaurant_list %}
 				<p class="my-4">検索結果 {{ total_hit_count }} 件 <small>{{ page_obj.start_index }}～{{ page_obj.end_index }}件を表示</small></p>
 				{% for resutaurant in restaurant_list %}
-				<div
-					class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-					<div class="col-auto d-none d-lg-block">
+				<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+					<div class="col-auto">
 						<img src="{{ resutaurant.11 }}" alt="{{ resutaurant.2 }}" class="img-rounded img-responsive img-search">
 					</div>
 					<div class="col p-4 d-flex flex-column position-static">
