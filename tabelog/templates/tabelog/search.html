@@ -1,5 +1,6 @@
 {% extends 'tabelog/base.html' %}
 {% load static %}
+{% load app %}
 
 {% block content %}
 	<div class="row">
@@ -360,28 +361,63 @@
 		</div>
 
 		<div class="col-md-9">
-			{% if restaurants_info %}
-			<p class="my-4">検索結果 {{ total_hit_count }} 件 <small>1～10件を表示</small></p>
+			{% if restaurant_list %}
+				<p class="my-4">検索結果 {{ total_hit_count }} 件 <small>1～10件を表示</small></p>
+				{% for resutaurant in restaurant_list %}
+				<div
+					class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+					<div class="col-auto d-none d-lg-block">
+						<img src="{{ resutaurant.11 }}" alt="{{ resutaurant.2 }}" class="img-rounded img-responsive img-search">
+					</div>
+					<div class="col p-4 d-flex flex-column position-static">
+						<strong class="d-inline-block mb-2 text-success">{{ resutaurant.32 }}</strong>
+						<h4 class="mb-2">{{ resutaurant.2 }}</h4>
+						<p class="card-text mb-1"><i
+								class="fas fa-subway fa-fw my-icon"></i>{{ resutaurant.21 }}・徒歩{{ resutaurant.23 }}分</p>
+						<p class="card-text mb-2"><i class="fas fa-yen-sign fa-fw my-icon"></i>平均{{ resutaurant.33 }}円</p>
+						<p class="card-text mb-auto">{{ resutaurant.26 }}</p>
+						<a href="{% url 'shop_info' resutaurant.0 %}" class="stretched-link"></a>
+					</div>
+				</div>
+				{% endfor %}
 
-			{% for item in restaurants_info %}
-			<div
-				class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-				<div class="col-auto d-none d-lg-block">
-					<img src="{{ item.11 }}" alt="{{ item.2 }}" class="img-rounded img-responsive img-search">
+				<div class="row justify-content-center">
+					<ul class="pagination">
+						{% if page_obj.has_previous %}
+							<li class="page-item">
+								<a class="page-link" href="?{%  url_replace request 'page' page_obj.previous_page_number %}">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+						{% endif %}
+					
+						{% for num in page_obj.paginator.page_range %}
+							{% if page_obj.number == num %}
+								<li class="page-item active">
+									<a class="page-link" href="#!">
+										{{ num }}
+									</a>
+								</li>
+							{% else %}
+								<li class="page-item">
+									<a class="page-link" href="?{%  url_replace request 'page' num %}">
+										{{ num }}
+									</a>
+								</li>
+							{% endif %}
+						{% endfor %}
+					
+						{% if page_obj.has_next %}
+							<li class="page-item">
+								<a class="page-link" href="?{%  url_replace request 'page' page_obj.next_page_number %}">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						{% endif %}
+					</ul>
 				</div>
-				<div class="col p-4 d-flex flex-column position-static">
-					<strong class="d-inline-block mb-2 text-success">{{ item.32 }}</strong>
-					<h4 class="mb-2">{{ item.2 }}</h4>
-					<p class="card-text mb-1"><i
-							class="fas fa-subway fa-fw my-icon"></i>{{ item.21 }}・徒歩{{ item.23 }}分</p>
-					<p class="card-text mb-2"><i class="fas fa-yen-sign fa-fw my-icon"></i>平均{{ item.33 }}円</p>
-					<p class="card-text mb-auto">{{ item.26 }}</p>
-					<a href="{% url 'shop_info' item.0 %}" class="stretched-link"></a>
-				</div>
-			</div>
-			{% endfor %}
 			{% else %}
-			<h4 class="mt-5">該当するものはありません。</h4>
+				<h4 class="mt-5">該当するものはありません。</h4>
 			{% endif %}
 		</div>
 	</div>

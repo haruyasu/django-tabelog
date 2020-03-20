@@ -3,12 +3,12 @@ from .models import Category, Pref, Review
 
 
 class SearchForm(forms.Form):
-    selected_pref = forms.ModelChoiceField(
+    pref = forms.ModelChoiceField(
         label='都道府県',
         required=False,
         queryset=Pref.objects,
     )
-    selected_category = forms.ModelChoiceField(
+    category = forms.ModelChoiceField(
         label='カテゴリ',
         required=False,
         queryset=Category.objects,
@@ -22,8 +22,8 @@ class SearchForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        selected_pref = self.fields['selected_pref']
-        selected_category = self.fields['selected_category']
+        pref = self.fields['pref']
+        category = self.fields['category']
 
 
 class ReviewForm(forms.ModelForm):

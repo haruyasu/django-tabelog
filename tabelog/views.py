@@ -4,24 +4,26 @@ from .models import Pref, Category, Review
 from .forms import SearchForm, ReviewForm
 from django.db.models import Avg
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 import requests
 
-
-def get_keyid():
-    return "e69b765feb7e3902bdc22e281874aa97"
-
+# API に渡すパラメータの値の指定
+GNAVIURL = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
+GNAVIKEY = "e69b765feb7e3902bdc22e281874aa97"
 
 class IndexView(TemplateView):
     template_name = 'tabelog/index.html'
 
     def get_context_data(self, *args, **kwargs):
         searchform = SearchForm()
+
+        # TOPに表示するレストラン
         category_l = "RSFST09000" # 居酒屋
         pref = "PREF13" # 東京都
         freeword = "歓送迎会"
         num = 6
-        
+
         query = get_gnavi_data(
             "",
             category_l,
@@ -29,14 +31,13 @@ class IndexView(TemplateView):
             freeword,
             num
         )
-        res_list = rest_search(query)
-        pickup_list = extract_restaurant_info(res_list)
-        review_list = Review.objects.all()[:10]
+
+        result = gnavi_api(query)
+        pickup_restaurant = restaurant_info(result)
 
         params = {
             'searchform': searchform,
-            'pickup_list': pickup_list,
-            'review_list': review_list
+            'pickup_restaurant': pickup_restaurant,
             }
         return params
 
@@ -49,7 +50,7 @@ def Search(request):
             category_l = request.GET['category_l']
             pref = request.GET['pref']
             freeword = request.GET['freeword']
-            num = 10
+            num = 50
             lunch = request.GET['lunch']
             no_smoking = request.GET['no_smoking']
             card = request.GET['card']
@@ -127,17 +128,111 @@ def Search(request):
                 darts,
                 web_reserve
             )
-            res_list = rest_search(query)
-            total_hit_count = len(res_list)
-            restaurants_info = extract_restaurant_info(res_list)
+            result = gnavi_api(query)
+            total_hit_count = len(result)
+            restaurant_list = restaurant_info(result)
+            page_obj = paginate_queryset(request, restaurant_list, 10)
 
-    params = {
-        'total_hit_count': total_hit_count,
-        'restaurants_info': restaurants_info,
-    }
+        context = {
+            'total_hit_count': total_hit_count,
+            'restaurant_list': page_obj.object_list,
+            'page_obj': page_obj,
+        }
 
-    return render(request, 'tabelog/search.html', params)
+        return render(request, 'tabelog/search.html', context)
 
+
+def ShopInfo(request, restid):
+    keyid = GNAVIKEY
+    id = restid
+    query = get_gnavi_data(
+        id,
+        "",
+        "",
+        "",
+        1
+    )
+    res_list = gnavi_api(query)
+    restaurants_info = restaurant_info(res_list)
+    review_count = Review.objects.filter(shop_id=restid).count()
+    score_ave = Review.objects.filter(shop_id=restid).aggregate(Avg('score'))
+    average = score_ave['score__avg']
+    if average:
+        average_rate = average / 5 * 100
+    else:
+        average_rate = 0
+
+    if request.method == 'GET':
+        review_form = ReviewForm()
+        review_list = Review.objects.filter(shop_id=restid)
+        params = {
+            'title': '店舗詳細',
+            'review_count': review_count,
+            'restaurants_info': restaurants_info,
+            'review_form': review_form,
+            'review_list': review_list,
+            'average': average,
+            'average_rate': average_rate,
+        }
+        return render(request, 'tabelog/shop_info.html', params)
+    else:
+        form = ReviewForm(data=request.POST)
+        score = request.POST['score']
+        comment = request.POST['comment']
+
+        if form.is_valid():
+            review = Review()
+            review.shop_id = restid
+            review.shop_name = restaurants_info[0][2]
+            review.user = request.user
+            review.score = score
+            review.comment = comment
+            is_exist = 0
+            is_exist = Review.objects.filter(shop_id = review.shop_id).filter(user = review.user).count()
+            
+            if not is_exist == 0:
+                messages.error(request, '既にレビューを投稿済みです。')
+            else:
+                review.save()
+                messages.success(request, 'レビューを投稿しました。')
+        else:
+            messages.error(request, 'エラーがあります。')
+
+        return redirect('shop_info', restid)
+
+
+def gnavi_api(params):
+    result = []
+    result_api = requests.get(GNAVIURL, params).text
+    result_json = json.loads(result_api)
+    if "error" not in result_json:
+        result.extend(result_json["rest"])
+    return result
+
+def paginate_queryset(request, queryset, count):
+    """Pageオブジェクトを返す。
+
+    ページングしたい場合に利用してください。
+
+    countは、1ページに表示する件数です。
+    返却するPgaeオブジェクトは、以下のような感じで使えます。
+
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
+        {% endif %}
+
+    また、page_obj.object_list で、count件数分の絞り込まれたquerysetが取得できます。
+
+    """
+    paginator = Paginator(queryset, count)
+    page = request.GET.get('page')
+    try:
+        page_obj = paginator.page(page)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    return page_obj
 
 def get_gnavi_data(
         id,
@@ -182,7 +277,7 @@ def get_gnavi_data(
         web_reserve='0'
     ):
     query = {
-        "keyid": get_keyid(),
+        "keyid": GNAVIKEY,
         "id": id,
         "area": "AREA110",
         "pref": pref,
@@ -230,15 +325,7 @@ def get_gnavi_data(
     return query
 
 
-def rest_search(query):
-    res_list = []
-    res = json.loads(requests.get("https://api.gnavi.co.jp/RestSearchAPI/v3/", params=query).text)
-    if "error" not in res:
-        res_list.extend(res["rest"])
-    return res_list
-
-
-def extract_restaurant_info(restaurants):
+def restaurant_info(restaurants):
     restaurant_list = []
     for restaurant in restaurants:
         id = restaurant["id"]
@@ -321,62 +408,3 @@ def extract_restaurant_info(restaurants):
             e_money # 37
         ])
     return restaurant_list
-
-
-def ShopInfo(request, restid):
-    keyid = get_keyid()
-    id = restid
-    query = get_gnavi_data(
-        id,
-        "",
-        "",
-        "",
-        1
-    )
-    res_list = rest_search(query)
-    restaurants_info = extract_restaurant_info(res_list)
-    review_count = Review.objects.filter(shop_id=restid).count()
-    score_ave = Review.objects.filter(shop_id=restid).aggregate(Avg('score'))
-    average = score_ave['score__avg']
-    if average:
-        average_rate = average / 5 * 100
-    else:
-        average_rate = 0
-
-    if request.method == 'GET':
-        review_form = ReviewForm()
-        review_list = Review.objects.filter(shop_id=restid)
-        params = {
-            'title': '店舗詳細',
-            'review_count': review_count,
-            'restaurants_info': restaurants_info,
-            'review_form': review_form,
-            'review_list': review_list,
-            'average': average,
-            'average_rate': average_rate,
-        }
-        return render(request, 'tabelog/shop_info.html', params)
-    else:
-        form = ReviewForm(data=request.POST)
-        score = request.POST['score']
-        comment = request.POST['comment']
-
-        if form.is_valid():
-            review = Review()
-            review.shop_id = restid
-            review.shop_name = restaurants_info[0][2]
-            review.user = request.user
-            review.score = score
-            review.comment = comment
-            is_exist = 0
-            is_exist = Review.objects.filter(shop_id = review.shop_id).filter(user = review.user).count()
-            
-            if not is_exist == 0:
-                messages.error(request, '既にレビューを投稿済みです。')
-            else:
-                review.save()
-                messages.success(request, 'レビューを投稿しました。')
-        else:
-            messages.error(request, 'エラーがあります。')
-
-        return redirect('shop_info', restid)
