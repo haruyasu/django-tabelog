@@ -135,6 +135,7 @@
                         <form class="login-form" action="" method="POST">
                             {{ review_form.non_field_errors }}
                             <div class="evaluation">
+                                <input type="hidden" name="score" value="3">
                                 <input id="score1" type="radio" name="score" value="5" />
                                 <label for="score1"><span class="text">最高</span>★</label>
                                 <input id="score2" type="radio" name="score" value="4" />

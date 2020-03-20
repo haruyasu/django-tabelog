@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
-
+from django.views.generic import TemplateView
 from .models import Pref, Category, Review
-from .forms import SearchForm, SignUpForm, LoginForm, ReviewForm
-# from django.contrib.auth import login, authenticate
-# from django.contrib.auth.views import LoginView, LogoutView
+from .forms import SearchForm, ReviewForm
 from django.db.models import Avg
 from django.contrib import messages
 import json
@@ -234,8 +231,7 @@ def get_gnavi_data(
 
 def rest_search(query):
     res_list = []
-    res = json.loads(requests.get(
-        "https://api.gnavi.co.jp/RestSearchAPI/v3/", params=query).text)
+    res = json.loads(requests.get("https://api.gnavi.co.jp/RestSearchAPI/v3/", params=query).text)
     if "error" not in res:
         res_list.extend(res["rest"])
     return res_list
@@ -349,6 +345,16 @@ def ShopInfo(request, restid):
     if request.method == 'GET':
         review_form = ReviewForm()
         review_list = Review.objects.filter(shop_id=restid)
+        params = {
+            'title': '店舗詳細',
+            'review_count': review_count,
+            'restaurants_info': restaurants_info,
+            'review_form': review_form,
+            'review_list': review_list,
+            'average': average,
+            'average_rate': average_rate,
+        }
+        return render(request, 'tabelog/shop_info.html', params)
     else:
         form = ReviewForm(data=request.POST)
         score = request.POST['score']
@@ -357,8 +363,7 @@ def ShopInfo(request, restid):
         if form.is_valid():
             review = Review()
             review.shop_id = restid
-            review.shop_name = restaurants_info[0][1]
-            review.image_url = restaurants_info[0][5]
+            review.shop_name = restaurants_info[0][2]
             review.user = request.user
             review.score = score
             review.comment = comment
@@ -367,49 +372,10 @@ def ShopInfo(request, restid):
             
             if not is_exist == 0:
                 messages.error(request, '既にレビューを投稿済みです。')
-                return redirect('shop_info', restid)
             else:
                 review.save()
                 messages.success(request, 'レビューを投稿しました。')
-                return redirect('shop_info', restid)
         else:
             messages.error(request, 'エラーがあります。')
-            return redirect('shop_info', restid)
-        return render(request, 'tabelog/index.html', {})
 
-    params = {
-        'title': '店舗詳細',
-        'review_count': review_count,
-        'restaurants_info': restaurants_info,
-        'review_form': review_form,
-        'review_list': review_list,
-        'average': average,
-        'average_rate': average_rate,
-    }
-
-    return render(request, 'tabelog/shop_info.html', params)
-
-
-# class SignUp(CreateView):
-#     form_class = SignUpForm
-#     template_name = 'signup.html'
-
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(username=username, password=raw_password)
-#             login(request, user)
-#             return redirect('index')
-#         return render(request, 'signup.html', {'form': form})
-
-
-# class Login(LoginView):
-#     form_class = LoginForm
-#     template_name = 'login.html'
-
-
-# class Logout(LogoutView):
-#     template_name = 'logout.html'
+        return redirect('shop_info', restid)

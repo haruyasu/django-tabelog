@@ -30,7 +30,6 @@ SCORE_CHOICES = [
 class Review(models.Model):
     shop_id = models.CharField('店舗ID', max_length=10, blank=False)
     shop_name = models.CharField('店舗名', max_length=200, blank=False)
-    image_url = models.CharField('画像１URL', max_length=300, blank=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     comment = models.TextField(verbose_name='レビューコメント', blank=False)
     score = models.PositiveSmallIntegerField(verbose_name='レビュースコア', choices=SCORE_CHOICES, default='3')
