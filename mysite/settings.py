@@ -150,3 +150,10 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '652154181229651',
     'API_SECRET': 'w0GMP9XLZwRAaj_XgUv_d1F2was'
 }
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'dark',
+    messages.ERROR: 'danger',
+}

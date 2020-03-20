@@ -9,7 +9,7 @@
     <title>Foodie</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/test.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -22,14 +22,14 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_logout' %}">Log out</a>
+                            <a class="nav-link" href="{% url 'account_logout' %}">ログアウト</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_signup' %}">Sign up</a>
+                            <a class="nav-link" href="{% url 'account_signup' %}">サインアップ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                            <a class="nav-link" href="{% url 'account_login' %}">ログイン</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -42,29 +42,27 @@
 
     <main>
         <div class="container">
+            <!-- 通知メッセージ -->
             {% if messages %}
                 <div class="row align-items-center my-3">
                     <div class="col-12">
-                        <div class="message">
+                        <div class="message text-center">
                             {% for message in messages %}
-                                {% if message.tags == "success" %}
-                                    <div class="alert alert-success" role="alert">
-                                {% elif message.tags == "error" %}
-                                    <div class="alert alert-danger" role="alert">
-                                {% else %}
-                                    <div class="alert alert-info" role="alert">
-                                {% endif %}
-                                        {{ message }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
+                                <div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %} alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">
+                                            &times;
+                                        </span>
+                                    </button>
+                                    {{ message }}
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             {% endif %}
 
+            <!-- メイン -->
             {% block content %}
 			{% endblock content %}
         </div>

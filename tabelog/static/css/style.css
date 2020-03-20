@@ -1,8 +1,21 @@
 body {
+	color: #455A64 !important;
+	font-family: -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", sans-serif !important;
 	padding-top: 56px;
 	display: flex;
 	flex-flow: column;
 	min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.5em !important;
+	letter-spacing: 0.1em !important;
+}
+
+p {
+	line-height: 1.65em !important;
+	text-align: justify !important;
+	letter-spacing: 0.05em !important;
 }
 
 main {
@@ -143,4 +156,14 @@ textarea {
 .gnavi:hover {
 	color: #28A745;
 	text-decoration: none;
+}
+
+.page-item.active .page-link {
+    background-color: #28A745 !important;
+	border-color: #28A745 !important;
+	color: #fff !important;
+}
+
+.page-link {
+    color: #28A745 !important;
 }

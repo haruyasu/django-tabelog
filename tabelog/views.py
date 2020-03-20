@@ -9,8 +9,8 @@ import json
 import requests
 
 # API に渡すパラメータの値の指定
-GNAVIURL = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
-GNAVIKEY = "e69b765feb7e3902bdc22e281874aa97"
+GNAVI_URL = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
+GNAVI_KEY = "e69b765feb7e3902bdc22e281874aa97"
 
 class IndexView(TemplateView):
     template_name = 'tabelog/index.html'
@@ -33,7 +33,7 @@ class IndexView(TemplateView):
         )
 
         result = gnavi_api(query)
-        pickup_restaurant = restaurant_info(result)
+        pickup_restaurant = get_restaurant_info(result)
 
         params = {
             'searchform': searchform,
@@ -130,7 +130,7 @@ def Search(request):
             )
             result = gnavi_api(query)
             total_hit_count = len(result)
-            restaurant_list = restaurant_info(result)
+            restaurant_list = get_restaurant_info(result)
             page_obj = paginate_queryset(request, restaurant_list, 10)
 
         context = {
@@ -143,30 +143,28 @@ def Search(request):
 
 
 def ShopInfo(request, restid):
-    keyid = GNAVIKEY
-    id = restid
     query = get_gnavi_data(
-        id,
+        restid,
         "",
         "",
         "",
         1
     )
-    res_list = gnavi_api(query)
-    restaurants_info = restaurant_info(res_list)
-    review_count = Review.objects.filter(shop_id=restid).count()
-    score_ave = Review.objects.filter(shop_id=restid).aggregate(Avg('score'))
-    average = score_ave['score__avg']
-    if average:
-        average_rate = average / 5 * 100
-    else:
-        average_rate = 0
+    result = gnavi_api(query)
+    restaurants_info = get_restaurant_info(result)
 
     if request.method == 'GET':
+        review_count = Review.objects.filter(shop_id=restid).count()
+        score_ave = Review.objects.filter(shop_id=restid).aggregate(Avg('score'))
+        average = score_ave['score__avg']
+        if average:
+            average_rate = average / 5 * 100
+        else:
+            average_rate = 0
         review_form = ReviewForm()
         review_list = Review.objects.filter(shop_id=restid)
+
         params = {
-            'title': '店舗詳細',
             'review_count': review_count,
             'restaurants_info': restaurants_info,
             'review_form': review_form,
@@ -177,53 +175,37 @@ def ShopInfo(request, restid):
         return render(request, 'tabelog/shop_info.html', params)
     else:
         form = ReviewForm(data=request.POST)
-        score = request.POST['score']
-        comment = request.POST['comment']
 
         if form.is_valid():
             review = Review()
             review.shop_id = restid
             review.shop_name = restaurants_info[0][2]
             review.user = request.user
-            review.score = score
-            review.comment = comment
-            is_exist = 0
+            review.score = request.POST['score']
+            review.comment = request.POST['comment']
             is_exist = Review.objects.filter(shop_id = review.shop_id).filter(user = review.user).count()
             
-            if not is_exist == 0:
-                messages.error(request, '既にレビューを投稿済みです。')
+            if is_exist:
+                messages.error(request, 'レビューを投稿済みです')
             else:
                 review.save()
-                messages.success(request, 'レビューを投稿しました。')
+                messages.success(request, 'レビューを投稿しました')
         else:
-            messages.error(request, 'エラーがあります。')
+            messages.error(request, 'エラーがあります')
 
         return redirect('shop_info', restid)
 
 
 def gnavi_api(params):
     result = []
-    result_api = requests.get(GNAVIURL, params).text
+    result_api = requests.get(GNAVI_URL, params).text
     result_json = json.loads(result_api)
     if "error" not in result_json:
         result.extend(result_json["rest"])
     return result
 
+
 def paginate_queryset(request, queryset, count):
-    """Pageオブジェクトを返す。
-
-    ページングしたい場合に利用してください。
-
-    countは、1ページに表示する件数です。
-    返却するPgaeオブジェクトは、以下のような感じで使えます。
-
-        {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
-        {% endif %}
-
-    また、page_obj.object_list で、count件数分の絞り込まれたquerysetが取得できます。
-
-    """
     paginator = Paginator(queryset, count)
     page = request.GET.get('page')
     try:
@@ -233,6 +215,7 @@ def paginate_queryset(request, queryset, count):
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
     return page_obj
+
 
 def get_gnavi_data(
         id,
@@ -277,7 +260,7 @@ def get_gnavi_data(
         web_reserve='0'
     ):
     query = {
-        "keyid": GNAVIKEY,
+        "keyid": GNAVI_KEY,
         "id": id,
         "area": "AREA110",
         "pref": pref,
@@ -325,7 +308,7 @@ def get_gnavi_data(
     return query
 
 
-def restaurant_info(restaurants):
+def get_restaurant_info(restaurants):
     restaurant_list = []
     for restaurant in restaurants:
         id = restaurant["id"]

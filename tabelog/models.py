@@ -35,9 +35,9 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_percent(self):
-        percent = round(self.score / 5 * 100)
-        return percent
+    def get_score_percent(self):
+        score_percent = round(self.score / 5 * 100)
+        return score_percent
 
     class Meta:
         unique_together = ('shop_id', 'user')
